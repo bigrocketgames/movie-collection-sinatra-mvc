@@ -1,11 +1,11 @@
+require 'rack-flash'
+
 class ApplicationController < Sinatra::Base
   # register Sinatra::ActiveRecordExtension
-
-  configure do
     enable :sessions
+    use Rack::Flash
     set :session_secret, "secret"
     set :views, 'app/views'
-  end
 
   get '/' do
     erb :'index'
@@ -13,7 +13,13 @@ class ApplicationController < Sinatra::Base
 
   post '/' do
     @user = User.new(params[:user])
-    @user.save ? (redirect '/collection') : (redirect '/signup')
+    if @user.save
+      session[:user_id] = @user.id
+      redirect '/collection'
+    else
+      flash[:message] = "Failed to signup new user.  Please make sure all fields are filled in."
+      redirect "/signup"
+    end
   end
 
   get '/signup' do
@@ -25,7 +31,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/collection' do
-    puts "we are in the collection"
+
   end
 
   post '/collection' do

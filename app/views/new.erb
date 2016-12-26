@@ -11,6 +11,9 @@
   <div class="container">
     <form action="/" method="post">
       <h3 class="text-center">Signup to Start Your Collection Today.</h3>
+      <% if flash.has?(:message) %>
+        <p style="color: red;"><%= flash[:message] %></p>
+      <% end %>
       <br>
       <label>Username: </label>
       <input type="text" name="user[username]" id="username">
