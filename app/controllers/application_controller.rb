@@ -32,6 +32,7 @@ class ApplicationController < Sinatra::Base
 
   get '/collection' do
 
+    erb :'collection'
   end
 
   post '/collection' do
@@ -41,6 +42,16 @@ class ApplicationController < Sinatra::Base
 
   get '/movie/:id' do
 
+  end
+
+  helpers do
+    def logged_in?
+      !!session[:user_id]
+    end
+
+    def current_user
+      User.find(session[:user_id])
+    end
   end
 
 end
