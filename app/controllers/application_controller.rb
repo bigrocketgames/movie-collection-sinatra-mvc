@@ -12,8 +12,8 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/' do
-    
-    redirect '/collection'
+    @user = User.new(params[:user])
+    @user.save ? (redirect '/collection') : (redirect '/signup')
   end
 
   get '/signup' do
@@ -25,7 +25,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/collection' do
-
+    puts "we are in the collection"
   end
 
   post '/collection' do
