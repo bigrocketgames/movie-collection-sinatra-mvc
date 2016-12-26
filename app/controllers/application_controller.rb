@@ -1,7 +1,6 @@
-require './config/environment'
-
 class ApplicationController < Sinatra::Base
-  register Sinatra::ActiveRecordExtension
+  # register Sinatra::ActiveRecordExtension
+
   configure do
     enable :sessions
     set :session_secret, "secret"
@@ -9,12 +8,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    puts "We made it to the index."
     erb :'index'
   end
 
   post '/' do
-
+    
     redirect '/collection'
   end
 
