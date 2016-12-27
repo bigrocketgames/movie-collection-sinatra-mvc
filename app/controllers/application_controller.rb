@@ -32,8 +32,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/collection' do
-    @user = current_user
-    erb :'collection'
+    if logged_in?
+      @user = current_user
+      erb :'collection'
+    else
+      redirect '/login'
+    end
   end
 
   post '/collection' do
