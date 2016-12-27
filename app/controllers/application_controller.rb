@@ -12,7 +12,6 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/' do
-    binding.pry
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
@@ -29,6 +28,17 @@ class ApplicationController < Sinatra::Base
 
   get '/login' do
     erb :'login'
+  end
+
+  post '/login' do
+    @user = User.find_by(username: params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/collection'
+    else
+      flash[:message] = "Invalid username/password.  Please try again."
+      redirect '/login'
+    end
   end
 
   get '/collection' do

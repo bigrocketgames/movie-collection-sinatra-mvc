@@ -8,7 +8,23 @@
   <title>Login to Nathan's Movie Collection Sinatra MVC app.</title>
 </head>
 <body>
-
+  <div class="container">
+    <form action="/login" method="post">
+      <% if flash.has?(:message) %>
+        <p class="text-center" style="color: red;"><%= flash[:message] %></p>
+      <% end %>
+      <br>
+      <div class="form-group">
+        <label for="username">Username: </label>
+        <input type="text" class="form-control" name="username" id="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" name="password" id="password">
+      </div>
+      <input class="btn btn-primary" type="submit" name="submit" value="Login">
+    </form>
+  </div>
 </body>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
