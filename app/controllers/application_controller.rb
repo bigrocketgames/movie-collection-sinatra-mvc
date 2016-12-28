@@ -51,7 +51,7 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/collection' do
-
+    @movie = Movie.create(name: params[:movie][:name], summary: params[:movie][:summary], user_id: session[:user_id])
     redirect '/collection'
   end
 
