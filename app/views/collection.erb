@@ -9,24 +9,27 @@
 </head>
 <body>
   <div class="container">
+    <% if flash.has?(:message) %>
+      <p class="text-center" style="color: red;"><%= flash[:message] %></p>
+    <% end %>
     <div class="table-responsive">
       <table class="table table-hover">
         <tr>
-          <th class="">ID:</th>
           <th class="">Name:</th>
           <th class="">Summary:</th>
+          <th class=""></th>
         </tr>
         <% @user.movies.each do |m| %>
         <tr>
-          <td><%= m.id %></td>
-          <td><%= m.name %></td>
+          <td><a href="/movie/<%= m.slug %>"><%= m.name %></a></td>
           <td><%= m.summary %></td>
+          <td><a href="/movie/<%= m.slug %>/delete">DELETE</a></td>
         </tr>
         <% end %>
       </table>
     </div>
 
-    <form action="/collection" method="post">
+    <form action="/user/<%= @user.slug %>/collection" method="post">
       <h4 class="text-center">Add a movie to your collection:</h4>
       <br>
       <div class="form-group">
