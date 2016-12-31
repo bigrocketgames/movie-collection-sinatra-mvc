@@ -1,16 +1,16 @@
 class MovieController < ApplicationController
 
-  get '/movie/:slug' do
+  get '/movie/:id' do
     @logged = logged_in?
     @user = current_user if @logged
-    @movie = Movie.find_by_slug(params[:slug])
+    @movie = Movie.find(params[:id])
     erb :'movie/single'
   end
 
-  get '/movie/:slug/edit' do
+  get '/movie/:id/edit' do
     @logged = logged_in?
     @user = current_user if @logged
-    @movie = Movie.find_by_slug(params[:slug])
+    @movie = Movie.find(params[:id])
     if current_user.id == @movie.user_id
       erb :'movie/edit'
     else
@@ -19,18 +19,18 @@ class MovieController < ApplicationController
     end
   end
 
-  patch '/movie/:slug/edit' do
-    @movie = Movie.find_by_slug(params[:slug])
+  patch '/movie/:id/edit' do
+    @movie = Movie.find(params[:id])
     @movie.update(params[:movie])
     flash[:message] = "#{@movie.name} has been successfully edited."
     redirect "/user/#{current_user.slug}/collection"
   end
 
-  get '/movie/:slug/delete' do
-    @movie = Movie.find_by_slug(params[:slug])
+  get '/movie/:id/delete' do
+    @movie = Movie.find(params[:id])
     if current_user.id == @movie.user_id
       @movie.destroy
-      flash[:message] = "Movie successfully removed from collection."
+      flash[:message] = "#{@movie.name} successfully removed from collection."
       redirect "/user/#{current_user.slug}/collection"
     else
       flash[:message] = "You are not authorized to edit this collection."

@@ -19,6 +19,7 @@ class ApplicationController < Sinatra::Base
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
+      flash[:message] = "You have successfully created an account.  Here is you new collection page.  You can now add movies to your collection."
       redirect "/user/#{@user.slug}/collection"
     else
       flash[:message] = "Failed to signup new user.  Please make sure all fields are filled in."
