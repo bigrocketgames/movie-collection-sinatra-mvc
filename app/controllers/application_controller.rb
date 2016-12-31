@@ -8,6 +8,8 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
 
   get '/' do
+    @logged = logged_in?
+    @user = current_user if @logged
     erb :'index'
   end
 
@@ -39,6 +41,11 @@ class ApplicationController < Sinatra::Base
       flash[:message] = "Invalid username/password.  Please try again."
       redirect '/login'
     end
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/'
   end
 
   get '/user/:slug/collection' do
@@ -79,7 +86,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      User.find(session[:user_id])
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
   end
 
