@@ -41,7 +41,7 @@
   </nav>
 
   <div class="container">
-    <form action="/movie/<%= @movie.slug %>/edit" method="post">
+    <form action="/movie/<%= @movie.id %>/edit" method="post">
       <input type="hidden" id="hidden" name="_method" value="patch">
       <h4 class="text-center">Edit this movie:</h4>
       <br>

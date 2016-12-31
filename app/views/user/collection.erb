@@ -55,12 +55,12 @@
         </tr>
         <% @user.movies.each do |m| %>
         <tr>
-          <td><a href="/movie/<%= m.slug %>"><%= m.name %></a></td>
+          <td><a href="/movie/<%= m.id %>"><%= m.name %></a></td>
           <td><%= m.summary %></td>
           <td><%= m.star_rating %></td>
           <% if m.user_id == @logged_in_user.id %>
-            <td><a href="/movie/<%= m.slug %>/edit">EDIT</a></td>
-            <td><a href="/movie/<%= m.slug %>/delete">DELETE</a></td>
+            <td><a href="/movie/<%= m.id %>/edit">EDIT</a></td>
+            <td><a href="/movie/<%= m.id %>/delete">DELETE</a></td>
           <% end %>
         </tr>
         <% end %>
