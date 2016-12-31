@@ -41,6 +41,24 @@
 
   <div class="container">
     <h1 class="text-center">Welcome to Movie Collections.</h1>
+    <% if @logged %>
+    <% count = 0 %>
+    <% a = [@user.id] %>
+      <div class="row" style="margin: 0;">
+          <% while count < 3 %>
+            <% diff_user = User.find(rand 1..User.all.count) %>
+              <% if !a.include?(diff_user.id) %>
+                <% a << diff_user.id %>
+                <div class="col-xs-6 col-md-4" style="padding: 40px 0px;">
+                  <a href="/user/<%= diff_user.slug %>/collection"><%= diff_user.username + "'s collection" %></a>
+                </div>
+                <% count += 1 %>
+              <% end %>
+          <% end %>
+      </div>
+    <% else %>
+      <p class="text-center"><a href="/login">Login</a> or <a href="/signup">signup</a> to see the many movie collections shared by our users.</p>
+    <% end %>
   </div>
 </body>
 
