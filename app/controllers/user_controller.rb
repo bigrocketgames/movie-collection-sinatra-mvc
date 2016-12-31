@@ -1,7 +1,10 @@
 class UserController < ApplicationController
 
   get '/user/:slug/collection' do
-    if logged_in?
+    @logged = logged_in?
+
+    if @logged
+      @logged_in_user = current_user
       @user = User.find_by_slug(params[:slug])
       erb :'user/collection'
     else

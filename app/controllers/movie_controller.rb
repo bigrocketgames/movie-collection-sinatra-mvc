@@ -1,8 +1,14 @@
 class MovieController < ApplicationController
 
   get '/movie/:slug' do
+    @logged = logged_in?
+    @user = current_user if @logged
     @movie = Movie.find_by_slug(params[:slug])
     erb :'movie/single'
+  end
+
+  get '/movie/:slug/edit' do
+    
   end
 
   get '/movie/:slug/delete' do
