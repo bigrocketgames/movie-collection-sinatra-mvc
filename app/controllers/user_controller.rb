@@ -8,6 +8,7 @@ class UserController < ApplicationController
       @user = User.find_by_slug(params[:slug])
       erb :'user/collection'
     else
+      flash[:message] = "You can only view collections if you are logged in."
       redirect '/login'
     end
   end
