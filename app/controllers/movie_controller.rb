@@ -8,7 +8,15 @@ class MovieController < ApplicationController
   end
 
   get '/movie/:slug/edit' do
-    
+    @logged = logged_in?
+    @user = current_user if @logged
+    @movie = Movie.find_by_slug(params[:slug])
+    if current_user.id == @movie.user_id
+      erb :'movie/edit'
+    else
+      flash[:message] = "You are not authorized to edit movies in others collections."
+      redirect back
+    end
   end
 
   get '/movie/:slug/delete' do
