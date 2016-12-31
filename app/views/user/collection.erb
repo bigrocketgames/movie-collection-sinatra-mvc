@@ -47,14 +47,17 @@
     <div class="table-responsive">
       <table class="table table-hover">
         <tr>
-          <th class="">Name:</th>
-          <th class="">Summary:</th>
-          <th class=""></th>
+          <th>Name:</th>
+          <th>Summary:</th>
+          <th>Star Rating:</th>
+          <th></th>
+          <th></th>
         </tr>
         <% @user.movies.each do |m| %>
         <tr>
           <td><a href="/movie/<%= m.slug %>"><%= m.name %></a></td>
           <td><%= m.summary %></td>
+          <td><%= m.star_rating %></td>
           <% if m.user_id == @logged_in_user.id %>
             <td><a href="/movie/<%= m.slug %>/edit">EDIT</a></td>
             <td><a href="/movie/<%= m.slug %>/delete">DELETE</a></td>
@@ -74,6 +77,10 @@
       <div class="form-group">
         <label for="movie_summary">Movie Summary:</label>
         <input class="form-control" type="text" name="movie[summary]" id="movie_summary">
+      </div>
+      <div class="form-group">
+        <label for="move_star_rating">Star Rating:</label>
+        <input type="text" class="form-control" name="movie[star_rating]" id="movie_star_rating">
       </div>
       <input type="submit" class="btn btn-primary" name="submit" value="Add Movie">
     </form>

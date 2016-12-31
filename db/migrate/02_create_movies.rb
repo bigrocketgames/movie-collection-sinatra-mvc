@@ -4,6 +4,7 @@ class CreateMovies < ActiveRecord::Migration
     create_table :movies do |t|
       t.string :name
       t.string :summary
+      t.float :star_rating
       t.integer :user_id
     end
   end

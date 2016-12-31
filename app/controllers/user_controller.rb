@@ -13,8 +13,8 @@ class UserController < ApplicationController
   end
 
   post '/user/:slug/collection' do
-    @movie = Movie.create(name: params[:movie][:name], summary: params[:movie][:summary], user_id: session[:user_id])
-    flash[:message] = "Movie successfully added to collection."
+    @movie = current_user.movies.create(params[:movie])
+    flash[:message] = "#{@movie.name} successfully added to collection."
     redirect "/user/#{current_user.slug}/collection"
   end
 

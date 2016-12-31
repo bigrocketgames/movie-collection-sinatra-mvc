@@ -53,6 +53,10 @@
         <label for="movie_summary">Movie Summary:</label>
         <input class="form-control" type="text" name="movie[summary]" id="movie_summary" value="<%= @movie.summary %>">
       </div>
+      <div class="form-group">
+        <label for="move_star_rating">Star Rating:</label>
+        <input type="text" class="form-control" name="movie[star_rating]" id="movie_star_rating" value="<%= @movie.star_rating %>">
+      </div>
       <input type="submit" class="btn btn-primary" name="submit" value="Edit Movie">
     </form>
   </div>
