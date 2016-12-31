@@ -19,6 +19,13 @@ class MovieController < ApplicationController
     end
   end
 
+  patch '/movie/:slug/edit' do
+    @movie = Movie.find_by_slug(params[:slug])
+    @movie.update(params[:movie])
+    flash[:message] = "#{@movie.name} has been successfully edited."
+    redirect "/user/#{current_user.slug}/collection"
+  end
+
   get '/movie/:slug/delete' do
     @movie = Movie.find_by_slug(params[:slug])
     if current_user.id == @movie.user_id
