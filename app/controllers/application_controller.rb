@@ -1,11 +1,13 @@
 require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
-  # register Sinatra::ActiveRecordExtension
+
+  configure do
     enable :sessions
     use Rack::Flash
     set :session_secret, "secret"
     set :views, 'app/views'
+  end
 
   get '/' do
     @logged = logged_in?
@@ -46,38 +48,6 @@ class ApplicationController < Sinatra::Base
   get '/logout' do
     session.clear
     redirect '/'
-  end
-
-  get '/user/:slug/collection' do
-    if logged_in?
-      @user = User.find_by_slug(params[:slug])
-      erb :'collection'
-    else
-      redirect '/login'
-    end
-  end
-
-  post '/user/:slug/collection' do
-    @movie = Movie.create(name: params[:movie][:name], summary: params[:movie][:summary], user_id: session[:user_id])
-    flash[:message] = "Movie successfully added to collection."
-    redirect "/user/#{current_user.slug}/collection"
-  end
-
-  get '/movie/:slug' do
-    @movie = Movie.find_by_slug(params[:slug])
-    erb :'single'
-  end
-
-  get '/movie/:slug/delete' do
-    @movie = Movie.find_by_slug(params[:slug])
-    if current_user.id == @movie.user_id
-      @movie.destroy
-      flash[:message] = "Movie successfully removed from collection."
-      redirect "/user/#{current_user.slug}/collection"
-    else
-      flash[:message] = "You are not authorized to edit this collection."
-      redirect "/user/#{@movie.user.slug}/collection"
-    end
   end
 
   helpers do
