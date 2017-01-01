@@ -16,14 +16,21 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/' do
-    @user = User.new(params[:user])
-    if @user.save
-      session[:user_id] = @user.id
-      flash[:message] = "You have successfully created an account.  Here is you new collection page.  You can now add movies to your collection."
-      redirect "/user/#{@user.slug}/collection"
+    @user_found = User.find_by(username: params[:user][:username]) ? true : false
+
+    if @user_found
+      flash[:message] = "This username already exists.  Please select a new one."
+      redirect back
     else
-      flash[:message] = "Failed to signup new user.  Please make sure all fields are filled in."
-      redirect "/signup"
+      @user = User.new(params[:user])
+      if @user.save
+        session[:user_id] = @user.id
+        flash[:message] = "You have successfully created an account.  Here is you new collection page.  You can now add movies to your collection."
+        redirect "/user/#{@user.slug}/collection"
+      else
+        flash[:message] = "Failed to signup new user.  Please make sure all fields are filled in."
+        redirect "/signup"
+      end
     end
   end
 
