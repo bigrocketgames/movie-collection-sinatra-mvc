@@ -33,16 +33,16 @@
           <% if @logged %>
             <li><a href="/logout">Logout</a></li>
           <% else %>
-            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/signup"> Signup</a></li>
+            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/user/new"> Signup</a></li>
           <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container">
+  <div class="container" style="margin-top: 50px;">
     <% if flash.has?(:message) %>
-      <p class="text-center" style="color: red;"><%= flash[:message] %></p>
+      <p class="text-center" style="color: red;"><strong><%= flash[:message] %></strong></p>
     <% end %>
     <div class="table-responsive">
       <table class="table table-hover">

@@ -33,7 +33,7 @@
           <% if @logged %>
             <li><a href="/logout">Logout</a></li>
           <% else %>
-            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/signup"> Signup</a></li>
+            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/user/new"> Signup</a></li>
           <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -41,7 +41,7 @@
   </nav>
 
   <div class="container">
-    <form class="form" action="/" method="post">
+    <form class="form" action="/user" method="post">
       <h3 class="text-center">Signup to Start Your Collection Today.</h3>
       <% if flash.has?(:message) %>
         <p class="text-center" style="color: red;"><%= flash[:message] %></p>
