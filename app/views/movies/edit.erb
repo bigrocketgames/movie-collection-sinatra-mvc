@@ -25,67 +25,40 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <% if @logged %>
-            <li><a href="/user/<%= @logged_in_user.slug %>/collection">View Your Collection</a></li>
+          <% if logged_in? %>
+            <li><a href="/users/<%= current_user.slug %>/movies">View Your Collection</a></li>
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <% if @logged %>
+          <% if logged_in? %>
             <li><a href="/logout">Logout</a></li>
           <% else %>
-            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/user/new"> Signup</a></li>
+            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/users/new"> Signup</a></li>
           <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container" style="margin-top: 50px;">
-    <% if flash.has?(:message) %>
-      <p class="text-center" style="color: red;"><strong><%= flash[:message] %></strong></p>
-    <% end %>
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <tr>
-          <th>Name:</th>
-          <th>Summary:</th>
-          <th>Star Rating:</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <% @user.movies.each do |m| %>
-        <tr>
-          <td><a href="/movie/<%= m.id %>"><%= m.name %></a></td>
-          <td><%= m.summary %></td>
-          <td><%= m.star_rating %></td>
-          <% if m.user_id == @logged_in_user.id %>
-            <td><a href="/movie/<%= m.id %>/edit">EDIT</a></td>
-            <td><a href="/movie/<%= m.id %>/delete">DELETE</a></td>
-          <% end %>
-        </tr>
-        <% end %>
-      </table>
-    </div>
-
-    <% if @logged_in_user.id == @user.id %>
-    <form action="/user/<%= @user.slug %>/collection" method="post">
-      <h4 class="text-center">Add a movie to your collection:</h4>
+  <div class="container">
+    <form action="/movies/<%= @movie.id %>/edit" method="post">
+      <input type="hidden" id="hidden" name="_method" value="patch">
+      <h4 class="text-center">Edit this movie:</h4>
       <br>
       <div class="form-group">
         <label for="movie_name">Movie Name:</label>
-        <input class="form-control" type="text" name="movie[name]" id="movie_name">
+        <input class="form-control" type="text" name="movie[name]" id="movie_name" value="<%= @movie.name %>">
       </div>
       <div class="form-group">
         <label for="movie_summary">Movie Summary:</label>
-        <input class="form-control" type="text" name="movie[summary]" id="movie_summary">
+        <input class="form-control" type="text" name="movie[summary]" id="movie_summary" value="<%= @movie.summary %>">
       </div>
       <div class="form-group">
         <label for="move_star_rating">Star Rating:</label>
-        <input type="text" class="form-control" name="movie[star_rating]" id="movie_star_rating">
+        <input type="text" class="form-control" name="movie[star_rating]" id="movie_star_rating" value="<%= @movie.star_rating %>">
       </div>
-      <input type="submit" class="btn btn-primary" name="submit" value="Add Movie">
+      <input type="submit" class="btn btn-primary" name="submit" value="Edit Movie">
     </form>
-    <% end %>
   </div>
 </body>
 

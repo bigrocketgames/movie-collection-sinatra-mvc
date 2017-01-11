@@ -5,6 +5,7 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 use Rack::MethodOverride
-use MovieController
-use UserController
+use SessionsController
+use MoviesController
+use UsersController
 run ApplicationController

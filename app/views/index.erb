@@ -24,15 +24,15 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <% if @logged %>
-            <li><a href="/user/<%= @user.slug %>/collection">View Your Collection</a></li>
+          <% if logged_in? %>
+            <li><a href="/users/<%= current_user.slug %>/movies">View Your Collection</a></li>
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <% if @logged %>
+          <% if logged_in? %>
             <li><a href="/logout">Logout</a></li>
           <% else %>
-            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/user/new"> Signup</a></li>
+            <li><a style="display: inline-block;" href="/login">Login </a>/<a style="display: inline-block;" href="/users/new"> Signup</a></li>
           <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -41,23 +41,23 @@
 
   <div class="container">
     <h1 class="text-center">Welcome to Movie Collections.</h1>
-    <% if @logged %>
+    <% if logged_in? %>
     <% count = 0 %>
-    <% a = [@user.id] %>
+    <% a = [current_user.id] %>
       <div class="row" style="margin: 0;">
           <% while count < 3 %>
             <% diff_user = User.find(rand 1..User.all.count) %>
               <% if !a.include?(diff_user.id) %>
                 <% a << diff_user.id %>
                 <div class="col-xs-6 col-md-4" style="padding: 40px 0px;">
-                  <a href="/user/<%= diff_user.slug %>/collection"><%= diff_user.username + "'s collection" %></a>
+                  <a href="/users/<%= diff_user.slug %>/movies"><%= diff_user.username + "'s collection" %></a>
                 </div>
                 <% count += 1 %>
               <% end %>
           <% end %>
       </div>
     <% else %>
-      <p class="text-center"><a href="/login">Login</a> or <a href="/user/new">signup</a> to see the many movie collections shared by our users.</p>
+      <p class="text-center"><a href="/login">Login</a> or <a href="/users/new">signup</a> to see the many movie collections shared by our users.</p>
     <% end %>
   </div>
 </body>
